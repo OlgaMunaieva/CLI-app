@@ -11,16 +11,14 @@ async function listContacts() {
 
 async function getContactById(contactId) {
   const allContacts = await listContacts();
-  const result = await allContacts.find((contact) => contact.id === contactId);
+  const result = allContacts.find((contact) => contact.id === contactId);
   return result || null;
 }
 
 async function removeContact(contactId) {
   const allContacts = await listContacts();
   const removedContact = await getContactById(contactId);
-  const newContacts = await allContacts.filter(
-    (contact) => contact.id !== contactId
-  );
+  const newContacts = allContacts.filter((contact) => contact.id !== contactId);
   await writeFile(contactsPath, JSON.stringify(newContacts, null, 2));
   return removedContact || null;
 }
